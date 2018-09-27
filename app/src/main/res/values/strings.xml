@@ -34,6 +34,11 @@
     <string name="nombre_blanco">El nombre del aroma no puede estar en blanco</string>
     <string name="marca_blanco">La marca del aroma no puede estar en blanco.</string>
     <string name="descripcion_botones_inicio">Botones del activity de inicio</string>
+    <string name="opcion_menu_1">Inicio</string>
+    <string name="opcion_menu_2">Añadir</string>
+    <string name="opcion_menu_3">Lista</string>
+    <string name="submenu">Información</string>
+    <string name="opcion_submenu_1">Desarrollador</string>
 
     <string-array name="tipos">
 
@@ -45,5 +50,8 @@
         <item>Otros</item>
 
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

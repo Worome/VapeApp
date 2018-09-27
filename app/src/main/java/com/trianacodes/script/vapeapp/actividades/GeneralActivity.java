@@ -1,5 +1,6 @@
 package com.trianacodes.script.vapeapp.actividades;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,9 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.trianacodes.script.vapeapp.R;
+import com.trianacodes.script.vapeapp.interfaces.fragmentos;
 
 public class GeneralActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, fragmentos {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,22 +75,23 @@ public class GeneralActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_inicio) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_nuevo) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_consulta) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_info) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
