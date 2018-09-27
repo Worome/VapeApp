@@ -10,15 +10,16 @@ import android.view.ViewGroup;
 
 import com.trianacodes.script.vapeapp.R;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AromaNuevoFragment.OnFragmentInteractionListener} interface
+ * {@link DefectoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AromaNuevoFragment#newInstance} factory method to
+ * Use the {@link DefectoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AromaNuevoFragment extends android.support.v4.app.Fragment {
+public class DefectoFragment extends android.support.v4.app.Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +31,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AromaNuevoFragment() {
+    public DefectoFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +41,11 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AromaNuevoFragment.
+     * @return A new instance of fragment DefectoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AromaNuevoFragment newInstance(String param1, String param2) {
-        AromaNuevoFragment fragment = new AromaNuevoFragment();
+    public static DefectoFragment newInstance(String param1, String param2) {
+        DefectoFragment fragment = new DefectoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,7 +66,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_aroma_nuevo, container, false);
+        return inflater.inflate(R.layout.fragment_defecto, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

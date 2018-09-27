@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,10 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.trianacodes.script.vapeapp.R;
+import com.trianacodes.script.vapeapp.fragments.AromaNuevoFragment;
+import com.trianacodes.script.vapeapp.fragments.DefectoFragment;
 import com.trianacodes.script.vapeapp.interfaces.fragmentos;
 
 public class GeneralActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, fragmentos {
+        implements NavigationView.OnNavigationItemSelectedListener, fragmentos{
+
+    Fragment defecto;
+    Fragment aromaNuevo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,11 @@ public class GeneralActivity extends AppCompatActivity
         setContentView(R.layout.activity_general);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        defecto = new DefectoFragment();
+        aromaNuevo = new AromaNuevoFragment();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments, defecto).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -35,6 +46,7 @@ public class GeneralActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
