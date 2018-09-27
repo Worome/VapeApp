@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VapeApp. The App of vapers</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="Aromas_Id">Identifier</string>
+    <string name="Aromas_Nombre">Flavour Name</string>
+    <string name="Aromas_HintId">Id</string>
+    <string name="Aromas_HintNombre">Flavour Name</string>
+    <string name="Aromas_Marca">Brand</string>
+    <string name="Aromas_HintMarca">Flavour Brand</string>
+    <string name="Aromas_Tipo">Type</string>
+
+    <string-array name="tipos">
+
+        <item>Fruit</item>
+        <item>Drinks</item>
+        <item>Creams</item>
+        <item>Desserts</item>
+        <item>Tobbaco</item>
+        <item>Others</item>
+
+    </string-array>
+
+    <string name="Aromas_Porcentaje">Recommended Percentage</string>
+    <string name="Aromas_HintPorcentaje">0-100</string>
+    <string name="Aromas_btnBorrar">Delete</string>
+    <string name="Aromas_btnModificar">Update</string>
+    <string name="Aromas_btnAnadir">Save</string>
+    <string name="Aromas_Semanas">(Weeks)</string>
+    <string name="Aromas_HintMinMaceracion">0-8</string>
+    <string name="Aromas_MinMaceracion">Minimum maceration time</string>
+    <string name="Aromas_MaxMaceracion">Maximum maceration time</string>
+    <string name="Aromas_Valor_0">0</string>
+    <string name="dialogo_mensaje">Message</string>
+    <string name="dialogo_boton_aceptar">OK</string>
+    <string name="Errores">Error</string>
+    <string name="aviso">Warning!</string>
+    <string name="Aromas_Observaciones">Remarks</string>
+    <string name="mensaje_error">The following error has occurred:</string>
+    <string name="mensaje_maceracion">The value of the Maximum Time of maceration must be greater than the minimum time of maceration</string>
+    <string name="nombre_blanco">The name of the aroma can not be blank</string>
+    <string name="marca_blanco">The aroma brand can not be blank.</string>
+    <string name="descripcion_botones_inicio">Start activity buttons</string>
+
+</resources>

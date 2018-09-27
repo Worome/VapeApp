@@ -1,0 +1,49 @@
+<resources>
+
+    <string name="app_name">VapeApp. La App de los vapeadores.</string>
+    <string name="navigation_drawer_open">Abrir la caja de navegación</string>
+    <string name="navigation_drawer_close">Cerrar la caja de navegación</string>
+    <string name="nav_header_title">Triana Codes</string>
+    <string name="nav_header_subtitle">trianacodes@gmail.com</string>
+    <string name="nav_header_desc">Cabecera de navegación</string>
+    <string name="action_settings">Configuración</string>
+    <string name="Aromas_Id">Identificador</string>
+    <string name="Aromas_Nombre">Nombre del aroma</string>
+    <string name="Aromas_HintId">Id</string>
+    <string name="Aromas_HintNombre">Nombre del aroma</string>
+    <string name="Aromas_Marca">Marca</string>
+    <string name="Aromas_HintMarca">Marca del aroma</string>
+    <string name="Aromas_Tipo">Tipo</string>
+    <string name="Aromas_Porcentaje">Porcentaje recomendado</string>
+    <string name="Aromas_HintPorcentaje">0-100</string>
+    <string name="Aromas_MinMaceracion">Tiempo mínimo maceración</string>
+    <string name="Aromas_HintMinMaceracion">0-8</string>
+    <string name="Aromas_Semanas">(Semanas)</string>
+    <string name="Aromas_MaxMaceracion">Tiempo máximo maceración</string>
+    <string name="Aromas_btnAnadir">Guardar</string>
+    <string name="Aromas_btnModificar">Modificar</string>
+    <string name="Aromas_btnBorrar">Eliminar</string>
+    <string name="Aromas_Valor_0">0</string>
+    <string name="Aromas_Observaciones">Observaciones</string>
+    <string name="dialogo_mensaje">Mensaje</string>
+    <string name="dialogo_boton_aceptar">Aceptar</string>
+    <string name="Errores">Error</string>
+    <string name="mensaje_error">Se ha producido el siguiente error:</string>
+    <string name="aviso">¡Cuidado!</string>
+    <string name="mensaje_maceracion">El valor del Tiempo Máximo de maceración ha de ser mayor que el tiempo mínimo de maceración</string>
+    <string name="nombre_blanco">El nombre del aroma no puede estar en blanco</string>
+    <string name="marca_blanco">La marca del aroma no puede estar en blanco.</string>
+    <string name="descripcion_botones_inicio">Botones del activity de inicio</string>
+
+    <string-array name="tipos">
+
+        <item>Frutal</item>
+        <item>Bebidas</item>
+        <item>Cremas</item>
+        <item>Postres</item>
+        <item>Tabaquiles</item>
+        <item>Otros</item>
+
+    </string-array>
+
+</resources>
