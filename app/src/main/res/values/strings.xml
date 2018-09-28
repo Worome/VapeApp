@@ -14,12 +14,12 @@
     <string name="Aromas_Marca">Marca</string>
     <string name="Aromas_HintMarca">Marca del aroma</string>
     <string name="Aromas_Tipo">Tipo</string>
-    <string name="Aromas_Porcentaje">Porcentaje recomendado</string>
+    <string name="Aromas_Porcentaje">Porcentajes recomendados</string>
     <string name="Aromas_HintPorcentaje">0-100</string>
-    <string name="Aromas_MinMaceracion">Tiempo mínimo maceración</string>
+    <string name="Aromas_MinMaceracion">Mínimo</string>
     <string name="Aromas_HintMinMaceracion">0-8</string>
     <string name="Aromas_Semanas">(Semanas)</string>
-    <string name="Aromas_MaxMaceracion">Tiempo máximo maceración</string>
+    <string name="Aromas_MaxMaceracion">Máximo</string>
     <string name="Aromas_btnAnadir">Guardar</string>
     <string name="Aromas_btnModificar">Modificar</string>
     <string name="Aromas_btnBorrar">Eliminar</string>
@@ -56,5 +56,8 @@
     <string name="opcion_menu_4">Salir de la app</string>
     <string name="content_description_fragment_inicio">Hombre vapeando</string>
     <string name="titulo_menu_aromas">Aromas</string>
+    <string name="Aromas_Porcentaje1">Desde</string>
+    <string name="Aromas_Porcentaje2">Hasta</string>
+    <string name="Aromas_Maceracion">Tiempos de Maceración en Días</string>
 
 </resources>

@@ -26,15 +26,15 @@
 
     </string-array>
 
-    <string name="Aromas_Porcentaje">Recommended Percentage</string>
+    <string name="Aromas_Porcentaje">Recommended Percentages</string>
     <string name="Aromas_HintPorcentaje">0-100</string>
     <string name="Aromas_btnBorrar">Delete</string>
     <string name="Aromas_btnModificar">Update</string>
     <string name="Aromas_btnAnadir">Save</string>
     <string name="Aromas_Semanas">(Weeks)</string>
     <string name="Aromas_HintMinMaceracion">0-8</string>
-    <string name="Aromas_MinMaceracion">Minimum maceration time</string>
-    <string name="Aromas_MaxMaceracion">Maximum maceration time</string>
+    <string name="Aromas_MinMaceracion">Minimum</string>
+    <string name="Aromas_MaxMaceracion">Maximum</string>
     <string name="Aromas_Valor_0">0</string>
     <string name="dialogo_mensaje">Message</string>
     <string name="dialogo_boton_aceptar">OK</string>
@@ -46,5 +46,7 @@
     <string name="nombre_blanco">The name of the aroma can not be blank</string>
     <string name="marca_blanco">The aroma brand can not be blank.</string>
     <string name="descripcion_botones_inicio">Start activity buttons</string>
+    <string name="Aromas_Porcentaje1">From</string>
+    <string name="Aromas_Porcentaje2">To</string>
 
 </resources>

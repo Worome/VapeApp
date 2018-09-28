@@ -92,6 +92,7 @@ public class GeneralActivity extends AppCompatActivity
         boolean estaSeleccionado = false;
 
         if (id == R.id.nav_inicio) {
+            //Vuelvo al activity Inicio
             finish();
         } else if (id == R.id.nav_nuevo) {
             fragmentoSeleccionado = new AromaNuevoFragment();
