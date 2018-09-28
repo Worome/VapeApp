@@ -1,5 +1,6 @@
 package com.trianacodes.script.vapeapp.actividades;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.trianacodes.script.vapeapp.R;
 import com.trianacodes.script.vapeapp.fragments.AromaNuevoFragment;
@@ -25,6 +27,7 @@ public class GeneralActivity extends AppCompatActivity
 
     Fragment defecto;
     Fragment aromaNuevo;
+    Intent Inicio = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class GeneralActivity extends AppCompatActivity
         defecto = new DefectoFragment();
         aromaNuevo = new AromaNuevoFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments, defecto).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.contenedor_fragments, defecto).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,12 +91,15 @@ public class GeneralActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_inicio) {
-
+            Toast.makeText(getApplicationContext(),"Volver a Incio",Toast.LENGTH_LONG).show();
+            Inicio = new Intent(GeneralActivity.this,InicioActivity.class);
         } else if (id == R.id.nav_nuevo) {
 
         } else if (id == R.id.nav_consulta) {
 
         } else if (id == R.id.nav_info) {
+
+        } else if (id == R.id.nav_salir){
 
         }
 

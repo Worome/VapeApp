@@ -16,6 +16,10 @@
             android:id="@+id/nav_consulta"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/opcion_menu_3" />
+        <item
+            android:id="@+id/nav_salir"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/opcion_menu_4" />
     </group>
 
     <item android:title="@string/submenu">

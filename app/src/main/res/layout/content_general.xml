@@ -11,13 +11,13 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.trianacodes.script.vapeapp.fragments.AromaNuevoFragment"
+        android:name="com.trianacodes.script.vapeapp.fragments.DefectoFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_aroma_nuevo" />
+        tools:layout="@layout/fragment_defecto" />
 
 </android.support.constraint.ConstraintLayout>
