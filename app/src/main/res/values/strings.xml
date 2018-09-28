@@ -17,7 +17,7 @@
     <string name="Aromas_Porcentaje">Porcentajes recomendados</string>
     <string name="Aromas_HintPorcentaje">0-100</string>
     <string name="Aromas_MinMaceracion">Mínimo</string>
-    <string name="Aromas_HintMinMaceracion">0-8</string>
+    <string name="Aromas_HintMinMaceracion">0-100</string>
     <string name="Aromas_Semanas">(Semanas)</string>
     <string name="Aromas_MaxMaceracion">Máximo</string>
     <string name="Aromas_btnAnadir">Guardar</string>
