@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.trianacodes.script.vapeapp.R;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -107,4 +106,5 @@ public class DefectoFragment extends android.support.v4.app.Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

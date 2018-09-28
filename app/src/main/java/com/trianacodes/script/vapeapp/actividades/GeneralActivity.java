@@ -27,7 +27,6 @@ public class GeneralActivity extends AppCompatActivity
 
     Fragment defecto;
     Fragment aromaNuevo;
-    Intent Inicio = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,18 +88,24 @@ public class GeneralActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragmentoSeleccionado = null;
+        boolean estaSeleccionado = false;
 
         if (id == R.id.nav_inicio) {
-            Toast.makeText(getApplicationContext(),"Volver a Incio",Toast.LENGTH_LONG).show();
-            Inicio = new Intent(GeneralActivity.this,InicioActivity.class);
+            finish();
         } else if (id == R.id.nav_nuevo) {
-
+            fragmentoSeleccionado = new AromaNuevoFragment();
+            estaSeleccionado = true;
         } else if (id == R.id.nav_consulta) {
-
+            estaSeleccionado = true;
         } else if (id == R.id.nav_info) {
-
+            estaSeleccionado = true;
         } else if (id == R.id.nav_salir){
+            estaSeleccionado = true;
+        }
 
+        if (estaSeleccionado){
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments,fragmentoSeleccionado).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
