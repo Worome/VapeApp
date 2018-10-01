@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -530,8 +531,95 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
     private void controlBotones() {
 
+        nuevo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(compruebaCampos() && controlaMaceracion()) {
+
+                    estableceValores();
+
+                    try {
+
+                        // Ejecuto la tarea asíncrona de inserción de registro
+                        new inserta().execute();
+                        // Inicializo los valores al pulsar el botón añadir
+                        eNombre.setText("");
+                        eMarca.setText("");
+                        desplegable.setSelection(0);
+                        sbPorcentajeDesde.setProgress(0);
+                        sbPorcentajeHasta.setProgress(0);
+                        sbMinMaceracion.setProgress(0);
+                        sbMaxMaceracion.setProgress(0);
+                        eObservaciones.setText("");
+
+                        //Ver cómo funciona el RateBar para ponerlo a 0
+                        //valoracion
 
 
+
+                        imagen.setText(0);
+                        //eNombre.setNextFocusForwardId(R.id.etNombre);
+                        eNombre.requestFocus(R.id.etNombre);
+
+                    } catch (Exception e) {
+
+                    /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
+                    cuadro de diálogo*/
+                        SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor datosEnviados = preferencias.edit();
+                        datosEnviados.putString("Titulo", getString(R.string.Errores));
+                        datosEnviados.putString("Mensaje", getString(R.string.mensaje_error) + " \n " +
+                                e.getMessage());
+                        datosEnviados.apply();
+                        //Creo un objeto de la clase en la que defino el cuadro de diálogo
+                        CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+                    /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+                     etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+                    cuadro de diálogo.*/
+                        dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+                        // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+                        android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+                        // Borro el cuadro de diálogo si no se está mostrando
+                        if (fragmento != null) {
+
+                            getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+                        }
+
+
+                        //Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+            }
+
+        });
+
+
+    }
+
+    private boolean compruebaCampos() {
+
+        return false;
+    }
+
+    private boolean controlaMaceracion(){
+
+        return false;
+    }
+
+    private void estableceValores() {
+    }
+
+    private class inserta extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
     }
 
 }
