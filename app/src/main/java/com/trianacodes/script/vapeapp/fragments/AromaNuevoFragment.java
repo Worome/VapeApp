@@ -9,6 +9,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -93,6 +95,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
         eNombre = vista.findViewById(R.id.etNombre);
         eMarca = vista.findViewById(R.id.etMarca);
+        desplegable = vista.findViewById(R.id.spTipo);
         sbPorcentajeDesde = vista.findViewById(R.id.sbPorcentajeDesde);
         ePorcentajeDesde = vista.findViewById(R.id.txtPorcentajeDesde);
         sbPorcentajeHasta = vista.findViewById(R.id.sbPorcentajeHasta);
@@ -165,7 +168,8 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
             controlDesplegable();
             /*Llamo a la función que va a controlar si se cambia el valor del SeekBar y si es así,
             modificar el contenido del EditText correspondiente*/
-            controlaSbPorcetaje();
+            controlaSbPorcetajeDesde();
+            controlaSbPorcetajeHasta();
             controlaSbMinimo();
             controlaSbMaximo();
              /*Llamo a la función que va a controlar si el contenido del EditText ha cambiado y si es
@@ -205,25 +209,322 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
         }
 
-
     }
 
     private void rellenaDesplegable() {
+
+        /*He definido dentro de strings.xml un string-array llamado "tipos", con todos los tipos de
+         * aromas. Ahora,, en esta línea creo un adaptador de tipo ArrayAdapter para luego rellenar
+         * la lista desplegable (Spinner). Para darle formato (tamaño de la letra, color, etc...) a
+         la caja de texto he creado un nuevo layout en donde defino todo esto (spinner_personalizado)
+         y es el que asigno al ArrayAdapter*/
+        ArrayAdapter tipos = ArrayAdapter.createFromResource(getContext(), R.array.tipos,
+                R.layout.spinner_personalizado);
+        // Asigno el desplegable de la interfaz al objeto de tipo Spinner que he creado (desplegable)
+       // desplegable = findViewById(R.id.spTipo);
+        /* Establezco el tipo de lista del adaptador. Como quiero qeu el tamaño de letra del
+        desplegable sea otro he creado otro layout (dropdown_spinner_personalizado) en el que defino
+        las características (tamaño, padding, color, etc.) y es el que asigno en el
+        setDropDownViewResource */
+        tipos.setDropDownViewResource(R.layout.dropdown_spinner_personalizado);
+        // Le asigno al objeto de tipo Spinner el adaptador que he construido
+        desplegable.setAdapter(tipos);
+
     }
 
     private void controlDesplegable(){
 
+        try {
+
+            desplegable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    aroma.setTipo(adapterView.getItemAtPosition(i).toString());
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+
+            });
+
+        } catch (Exception e) {
+
+            /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
+            cuadro de diálogo*/
+            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences.Editor datosEnviados = preferencias.edit();
+            datosEnviados.putString("Titulo",getString(R.string.Errores));
+            datosEnviados.putString("Mensaje", getString(R.string.mensaje_error) + " \n " +
+                    e.getMessage());
+            datosEnviados.apply();
+            //Creo un objeto de la clase en la que defino el cuadro de diálogo
+            CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+            /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+             etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+             cuadro de diálogo.*/
+            dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+            // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+            android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+            // Borro el cuadro de diálogo si no se está mostrando
+            if (fragmento != null){
+
+                getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+            }
+
+            // Toast.makeText(this,"Error: " + e.getMessage(),Toast.LENGTH_LONG).show();
+
+        }
+
+
     }
 
-    private void controlaSbPorcetaje(){
+    private void controlaSbPorcetajeDesde(){
+
+        try {
+
+            sbPorcentajeDesde.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                @Override
+                public void onProgressChanged(SeekBar porcentaje, int i, boolean b) {
+
+                /* Uso String.ValueOf para que el número almacenado en porcentaje.getProgress()
+                lo tome el EditText con formato texto, ya que los EditText sólo admiten contenido
+                de tipo String.*/
+
+                    ePorcentajeDesde.setText(String.valueOf(porcentaje.getProgress()));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+
+        } catch (Exception e) {
+
+            /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
+            cuadro de diálogo*/
+            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences.Editor datosEnviados = preferencias.edit();
+            datosEnviados.putString("Titulo",getString(R.string.Errores));
+            datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error) + " \n " +
+                    e.getMessage());
+            datosEnviados.apply();
+            //Creo un objeto de la clase en la que defino el cuadro de diálogo
+            CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+            /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+             etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+             cuadro de diálogo.*/
+            dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+            // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+            android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+            // Borro el cuadro de diálogo si no se está mostrando
+            if (fragmento != null){
+
+                getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+            }
+
+            //Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    private void controlaSbPorcetajeHasta(){
+
+        try {
+
+            sbPorcentajeHasta.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                @Override
+                public void onProgressChanged(SeekBar porcentaje, int i, boolean b) {
+
+                /* Uso String.ValueOf para que el número almacenado en porcentaje.getProgress()
+                lo tome el EditText con formato texto, ya que los EditText sólo admiten contenido
+                de tipo String.*/
+
+                    ePorcentajeHasta.setText(String.valueOf(porcentaje.getProgress()));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+
+        } catch (Exception e) {
+
+            /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
+            cuadro de diálogo*/
+            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences.Editor datosEnviados = preferencias.edit();
+            datosEnviados.putString("Titulo",getString(R.string.Errores));
+            datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error) + " \n " +
+                    e.getMessage());
+            datosEnviados.apply();
+            //Creo un objeto de la clase en la que defino el cuadro de diálogo
+            CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+            /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+             etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+             cuadro de diálogo.*/
+            dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+            // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+            android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+            // Borro el cuadro de diálogo si no se está mostrando
+            if (fragmento != null){
+
+                getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+            }
+
+            //Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 
     private void controlaSbMinimo(){
 
+        try {
+
+            sbMinMaceracion.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar minimo, int i, boolean b) {
+
+                 /* Uso String.ValueOf para que el número almacenado en porcentaje.getProgress()
+                lo tome el EditText con formato texto, ya que los EditText sólo admiten contenido
+                de tipo String.*/
+
+                    eMinMaceracion.setText(String.valueOf(minimo.getProgress()));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+
+            });
+
+
+        } catch (Exception e) {
+
+            /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
+            cuadro de diálogo*/
+            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences.Editor datosEnviados = preferencias.edit();
+            datosEnviados.putString("Titulo",getString(R.string.Errores));
+            datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error)+ " \n " +
+                    e.getMessage());
+            datosEnviados.apply();
+            //Creo un objeto de la clase en la que defino el cuadro de diálogo
+            CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+            /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+             etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+             cuadro de diálogo.*/
+            dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+            // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+            android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+            // Borro el cuadro de diálogo si no se está mostrando
+            if (fragmento != null){
+
+                getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+            }
+
+            //Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+
     }
 
     private void controlaSbMaximo(){
+
+        try {
+
+            sbMaxMaceracion.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar maximo, int i, boolean b) {
+
+                 /* Uso String.ValueOf para que el número almacenado en porcentaje.getProgress()
+                lo tome el EditText con formato texto, ya que los EditText sólo admiten contenido
+                de tipo String.*/
+
+                    eMaxMaceracion.setText(String.valueOf(maximo.getProgress()));
+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+
+            });
+
+
+        } catch (Exception e) {
+
+            /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
+            cuadro de diálogo*/
+            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences.Editor datosEnviados = preferencias.edit();
+            datosEnviados.putString("Titulo",getString(R.string.Errores));
+            datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error)+ " \n " +
+                    e.getMessage());
+            datosEnviados.apply();
+            //Creo un objeto de la clase en la que defino el cuadro de diálogo
+            CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+            /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+             etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+             cuadro de diálogo.*/
+            dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+            // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+            android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+            // Borro el cuadro de diálogo si no se está mostrando
+            if (fragmento != null){
+
+                getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+            }
+
+            //Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 
