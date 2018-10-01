@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckedTextView android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:textSize="@dimen/literales"
+    android:gravity="start"
+    android:padding="@dimen/padd"
+    style="?android:attr/spinnerDropDownItemStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+    <!-- La línea style = "........" hay que incluirla para que sepa la app qué opción se ha
+     seleccionado-->
