@@ -38,12 +38,14 @@
             <SeekBar
                 android:id="@+id/sbMaximo"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ancho_seekbar"
+                android:layout_height="@dimen/alto_seekbar"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                android:max="10"
-                android:progress="3"
+                android:max="100"
+                android:progress="1"
+                android:progressDrawable="@drawable/seekbar_progress"
+                android:thumb="@drawable/seekbar_thumb"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -136,12 +138,14 @@
             <SeekBar
                 android:id="@+id/sbPorcentajeHasta"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ancho_seekbar"
+                android:layout_height="@dimen/alto_seekbar"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:max="100"
                 android:progress="1"
+                android:progressDrawable="@drawable/seekbar_progress"
+                android:thumb="@drawable/seekbar_thumb"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -172,12 +176,14 @@
             <SeekBar
                 android:id="@+id/sbMinimo"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ancho_seekbar"
+                android:layout_height="@dimen/alto_seekbar"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:max="10"
-                android:progress="3"
+                android:max="100"
+                android:progress="1"
+                android:progressDrawable="@drawable/seekbar_progress"
+                android:thumb="@drawable/seekbar_thumb"
                 app:layout_constraintStart_toEndOf="@+id/txtMinimo"
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -198,12 +204,14 @@
             <SeekBar
                 android:id="@+id/sbPorcentajeDesde"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ancho_seekbar"
+                android:layout_height="@dimen/alto_seekbar"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:max="100"
                 android:progress="1"
+                android:progressDrawable="@drawable/seekbar_progress"
+                android:thumb="@drawable/seekbar_thumb"
                 app:layout_constraintStart_toEndOf="@+id/txtPorcentajeDesde"
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 

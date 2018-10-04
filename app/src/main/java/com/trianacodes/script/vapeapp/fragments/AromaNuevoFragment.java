@@ -49,7 +49,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     OperacionesBasesDeDatos operacionesDatos;
     private DbHelper bd;
     private Aromas aroma = new Aromas();
-    private Context mContext;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -183,8 +183,8 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo. Parece que como estoy dentro de un Fragment hay que anteponer al
-            getSharedpreferences un objetio de tipo Context (en este caso lo he llamado mContext)*/
-            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            getSharedpreferences un objetio de tipo Context (en este caso lo he llamado this.getActivity())*/
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje", getString(R.string.mensaje_error) + " \n" +
@@ -257,7 +257,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje", getString(R.string.mensaje_error) + " \n " +
@@ -318,7 +318,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error) + " \n " +
@@ -378,7 +378,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error) + " \n " +
@@ -439,7 +439,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error)+ " \n " +
@@ -501,7 +501,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error)+ " \n " +
@@ -553,12 +553,9 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
                         sbMaxMaceracion.setProgress(0);
                         eObservaciones.setText("");
 
-                        //Ver cómo funciona el RateBar para ponerlo a 0
-                        //valoracion
-
-
-
-                        imagen.setText(0);
+                        //Todo: Ver cómo funciona el RateBar y las imagenes para ponerlo a 0
+                        //imagen.setText(0);
+                        //valoracion.setNumStars(0);;
                         //eNombre.setNextFocusForwardId(R.id.etNombre);
                         eNombre.requestFocus(R.id.etNombre);
 
@@ -566,7 +563,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
                     /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
                     cuadro de diálogo*/
-                        SharedPreferences preferencias = mContext.getSharedPreferences("Dialogos", Context.MODE_PRIVATE);
+                        SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos", Context.MODE_PRIVATE);
                         SharedPreferences.Editor datosEnviados = preferencias.edit();
                         datosEnviados.putString("Titulo", getString(R.string.Errores));
                         datosEnviados.putString("Mensaje", getString(R.string.mensaje_error) + " \n " +
@@ -603,23 +600,171 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
     private boolean compruebaCampos() {
 
-        return false;
+        // Controlo que los campos Nombre y Marca no estén vacíos
+        //if (eNombre.getText().toString().isEmpty()){
+        if (eNombre.getText().toString().equals("")){
+
+            /* Guardo en el SharedPreferences los datos necesarios que hay que mostrar en el
+            cuadro de diálogo. En los fragments, hay que usar this.getActivity.getSharedPreferences,
+            en vez de escribir sólo getSharedPreferences.*/
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences.Editor datosEnviados = preferencias.edit();
+            datosEnviados.putString("Titulo",getString(R.string.aviso));
+            datosEnviados.putString("Mensaje", getString(R.string.nombre_blanco));
+            datosEnviados.apply();
+            //Creo un objeto de la clase en la que defino el cuadro de diálogo
+            CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+            /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+             etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+             cuadro de diálogo.*/
+            dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+            // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+            android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+            // Borro el cuadro de diálogo si no se está mostrando
+            if (fragmento != null){
+
+                getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+            }
+
+
+            //Toast.makeText(this,"El nombre del aroma no puede estar en blanco",Toast.LENGTH_LONG).show();
+            eNombre.requestFocus(R.id.etNombre);
+            return false;
+
+        }
+
+        // Controlo que los campos Nombre y Marca no estén vacíos
+        //if (eNombre.getText().toString().isEmpty()){
+        if (eMarca.getText().toString().equals("")){
+
+            /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
+            cuadro de diálogo*/
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences.Editor datosEnviados = preferencias.edit();
+            datosEnviados.putString("Titulo",getString(R.string.aviso));
+            datosEnviados.putString("Mensaje", getString(R.string.marca_blanco));
+            datosEnviados.apply();
+            //Creo un objeto de la clase en la que defino el cuadro de diálogo
+            CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+            /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+             etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+             cuadro de diálogo.*/
+            dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+            // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+            android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+            // Borro el cuadro de diálogo si no se está mostrando
+            if (fragmento != null){
+
+                getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+            }
+
+
+            //Toast.makeText(this,"El nombre del aroma no puede estar en blanco",Toast.LENGTH_LONG).show();
+            eMarca.requestFocus(R.id.etMarca);
+            return false;
+
+        }
+
+        return true;
+
     }
 
     private boolean controlaMaceracion(){
 
-        return false;
+        if (sbMinMaceracion.getProgress() > sbMaxMaceracion.getProgress()){
+
+                   /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
+            cuadro de diálogo*/
+            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences.Editor datosEnviados = preferencias.edit();
+            datosEnviados.putString("Titulo",getString(R.string.aviso));
+            datosEnviados.putString("Mensaje", getString(R.string.mensaje_maceracion));
+            datosEnviados.apply();
+            //Creo un objeto de la clase en la que defino el cuadro de diálogo
+            CuadroDialogo dialogoPersonalizado = new CuadroDialogo();
+            /*Muestro el cuadro de diálogo pasándo como parámetros el manejador de fragmentos y una
+             etiqueta que se va a suar para locarlizar el cuadro de diálogo para hacer tareas con el
+             cuadro de diálogo.*/
+            dialogoPersonalizado.show(getFragmentManager(), "personalizado");
+            // Creo un objeto de tipo Fragment para almacenar en él el cuadro de diálogo
+            android.support.v4.app.Fragment fragmento = getFragmentManager().findFragmentByTag("personalizado");
+
+            // Borro el cuadro de diálogo si no se está mostrando
+            if (fragmento != null){
+
+                getFragmentManager().beginTransaction().remove(fragmento).commit();
+
+            }
+
+            //Toast.makeText(getApplicationContext(),"El valor del Tiempo Máximo de maceración \n " +
+            //"ha de ser mayor que el tiempo mínimo de maceración",Toast.LENGTH_LONG).show();
+            //sbMinMaceracion.requestFocus();
+
+            return false;
+
+        }
+
+        return true;
+
     }
 
     private void estableceValores() {
+
+        aroma.setNombre(eNombre.getText().toString());
+        aroma.setMarca(eMarca.getText().toString());
+        aroma.setDesdePorcentaje(sbPorcentajeDesde.getProgress());
+        aroma.setHastaPorcentaje(sbPorcentajeHasta.getProgress());
+        aroma.setTiempoMinimoMaceracion(sbMinMaceracion.getProgress());
+        aroma.setTiempoMaximoMaceracion(sbMaxMaceracion.getProgress());
+        aroma.setObservaciones(eObservaciones.getText().toString());
+        //Todo: lo de abajo hay que completarlo
+        //aroma.setImagen();
+        //aroma.setValoracion(valoracion.getNumStars());
+
     }
 
+    // Creo tarea asíncrona de inserción de registro
     private class inserta extends AsyncTask<Void,Void,Void> {
+
+        /*private WeakReference<AromasActivity> activityReference;
+        inserta(AromasActivity context) {
+            activityReference = new WeakReference<>(context);
+        }*/
+
 
         @Override
         protected Void doInBackground(Void... voids) {
+
+            try{
+
+                operacionesDatos.getDb().beginTransaction();
+                operacionesDatos.insertarAroma(aroma);
+                operacionesDatos.getDb().setTransactionSuccessful();
+
+            } finally {
+
+                operacionesDatos.getDb().endTransaction();
+
+            }
+
             return null;
+
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            super.onPostExecute(aVoid);
+            //AromasActivity activity = activityReference.get();
+            //if (activity == null || activity.isFinishing()) return;
+            // Toast.makeText(getApplicationContext(),aroma.getNombre() + " de " + aroma.getMarca(),Toast.LENGTH_LONG).show();
+
+        }
+
     }
 
 }
