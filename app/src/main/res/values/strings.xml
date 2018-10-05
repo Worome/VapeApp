@@ -30,7 +30,7 @@
     <string name="Errores">Error</string>
     <string name="mensaje_error">Se ha producido el siguiente error:</string>
     <string name="aviso">¡Cuidado!</string>
-    <string name="mensaje_maceracion">El valor del Tiempo Máximo de maceración ha de ser mayor que el tiempo mínimo de maceración</string>
+    <string name="mensaje_maceracion">El valor del Tiempo Máximo de maceración ha de ser mayor que el Tiempo Mínimo de maceración</string>
     <string name="nombre_blanco">El nombre del aroma no puede estar en blanco</string>
     <string name="marca_blanco">La marca del aroma no puede estar en blanco.</string>
     <string name="descripcion_botones_inicio">Botones del activity de inicio</string>

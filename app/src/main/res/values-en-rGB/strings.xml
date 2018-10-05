@@ -31,7 +31,7 @@
     <string name="Errores">Error</string>
     <string name="mensaje_error">The following error has occurred:</string>
     <string name="aviso">Warning!</string>
-    <string name="mensaje_maceracion">The value of the Maximum Time of maceration must be greater than the minimum time of maceration</string>
+    <string name="mensaje_maceracion">The value of the Maximum Time of maceration must be greater than the Minimum Time of maceration</string>
     <string name="nombre_blanco">The name of the aroma can not be blank</string>
     <string name="marca_blanco">The aroma brand can not be blank.</string>
     <string name="descripcion_botones_inicio">Start activity buttons</string>
@@ -58,5 +58,6 @@
         <item>Others</item>
 
     </string-array>
+    <string name="Aromas_BotonImagen">Add Image</string>
 
 </resources>
