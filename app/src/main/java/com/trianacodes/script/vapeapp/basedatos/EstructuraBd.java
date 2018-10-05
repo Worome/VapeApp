@@ -24,6 +24,7 @@ public class EstructuraBd {
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
     private static final String COMMA_SEP = ",";
+    private static final String REAL_TYPE = "REAL";
 
     /* Constantes que contienen las sentencias de creación de las tablas (Cada vez que añada, borre
      o modificar un campo de una tabla debo añadir aquí el cambio como he hecho añadiendo el campo
@@ -35,7 +36,7 @@ public class EstructuraBd {
             COMMA_SEP + AROMA_DESDE_PORCENTAJE + INTEGER_TYPE + COMMA_SEP + AROMA_HASTA_PORCENTAJE +
             INTEGER_TYPE  + COMMA_SEP + AROMA_MIN_MACERACION + INTEGER_TYPE +
             COMMA_SEP + AROMA_MAX_MACERACION + INTEGER_TYPE + COMMA_SEP + AROMA_OBSERVACIONES + TEXT_TYPE +
-            COMMA_SEP + AROMA_VALORACION + INTEGER_TYPE + COMMA_SEP + AROMA_IMAGEN + INTEGER_TYPE + " )";
+            COMMA_SEP + AROMA_VALORACION + REAL_TYPE + COMMA_SEP + AROMA_IMAGEN + INTEGER_TYPE + " )";
 
     // Constantes que contienen las sentencias de eliminación de tablas
     public static final String SQL_DELETE_AROMAS = "DROP TABLE IF EXISTS " + TABLA_AROMA;
