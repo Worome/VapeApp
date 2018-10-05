@@ -764,7 +764,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
         aroma.setObservaciones(eObservaciones.getText().toString());
         //Todo: lo de abajo hay que completarlo
         //aroma.setImagen();
-        aroma.setValoracion((int) valoracion.getRating());
+        aroma.setValoracion( (double) valoracion.getRating());
 
     }
 
