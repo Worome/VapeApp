@@ -2,11 +2,13 @@ package com.trianacodes.script.vapeapp.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +113,19 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
         valoracion = vista.findViewById(R.id.rbValoracion);
         imagen = vista.findViewById(R.id.btnImagen);
         nuevo = vista.findViewById(R.id.btnNuevo);
+
+        imagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Creo el Intente para recorrer la galería de imágenes del dispositivo
+                Intent intentImagenes = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                // Indico que el Intent es de tipo images
+                intentImagenes.setType("image/");
+                startActivityForResult(intentImagenes.createChooser(intentImagenes, "Seleccione app:"),10);
+
+            }
+        });
 
         // Obtengo una instancia de la base de datos
         operacionesDatos = OperacionesBasesDeDatos.obtenerInstancia(getContext());
