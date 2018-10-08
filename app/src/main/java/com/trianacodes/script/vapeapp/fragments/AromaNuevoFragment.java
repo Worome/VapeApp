@@ -185,7 +185,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo. Parece que como estoy dentro de un Fragment hay que anteponer al
-            getSharedpreferences un objetio de tipo Context (en este caso lo he llamado this.getActivity())*/
+            getSharedpreferences un objeto de tipo Context (en este caso lo he llamado this.getActivity())*/
             SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));

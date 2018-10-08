@@ -47,7 +47,7 @@ public class EstructuraBd {
 
     public static final String ACTUALIZA_BASEDATOS_VERSION_3 = "ALTER TABLE " + TABLA_AROMA + " ADD COLUMN " +
             AROMA_HASTA_PORCENTAJE + INTEGER_TYPE + COMMA_SEP +
-            AROMA_VALORACION + INTEGER_TYPE + COMMA_SEP + AROMA_IMAGEN + INTEGER_TYPE;
+            AROMA_VALORACION + REAL_TYPE + COMMA_SEP + AROMA_IMAGEN + INTEGER_TYPE;
 
 
     // Creo el constructor

@@ -60,5 +60,6 @@
     <string name="Aromas_Porcentaje2">Hasta</string>
     <string name="Aromas_Maceracion">Tiempos de Maceración en Días</string>
     <string name="Aromas_BotonImagen">Incluir Foto</string>
+    <string name="Titulo_Nuevo_Aroma">NUEVOS AROMAS</string>
 
 </resources>

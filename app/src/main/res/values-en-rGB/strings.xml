@@ -59,5 +59,6 @@
 
     </string-array>
     <string name="Aromas_BotonImagen">Add Image</string>
+    <string name="Titulo_Nuevo_Aroma">NEW FLAVOUR</string>
 
 </resources>
