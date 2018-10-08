@@ -11,12 +11,14 @@
 
     <TextView
         android:id="@+id/textView3"
+        style="@style/estilo_literales"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/Titulo_Nuevo_Aroma"
+        android:textColor="?android:attr/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +49,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spTipo" />
+                app:layout_constraintTop_toBottomOf="@+id/ivAroma" />
 
             <SeekBar
                 android:id="@+id/sbMaximo"
@@ -81,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="120dp"
                 android:text="@string/Aromas_Tipo"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="18sp"
@@ -91,7 +93,7 @@
 
             <Spinner
                 android:id="@+id/spTipo"
-                android:layout_width="304dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
@@ -128,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/Aromas_Maceracion"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="18sp"
@@ -271,7 +273,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtMinimo" />
 
@@ -327,6 +329,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="202dp" />
+
+            <ImageView
+                android:id="@+id/ivAroma"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/img_base"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etMarca" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
