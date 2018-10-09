@@ -186,7 +186,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getContext(),"Antes de preguntar",Toast.LENGTH_LONG).show();
+
         // Pregunto si se ha seleccionado una imagen
         if (resultCode == RESULT_OK){
 
