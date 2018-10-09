@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,11 +125,30 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View view) {
 
-                // Creo el Intente para recorrer la galería de imágenes del dispositivo
-                Intent intentImagenes = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                // Indico que el Intent es de tipo images
-                intentImagenes.setType("image/");
-                startActivityForResult(intentImagenes.createChooser(intentImagenes, "Abrir con"),10);
+                final CharSequence[] opciones = {"Usar cámara","Cargar foto desde galería","Cancelar"};
+                final AlertDialog.Builder dialogoImagenes = new AlertDialog.Builder(getContext());
+                dialogoImagenes.setTitle("Selecciona metodo de captura");
+                dialogoImagenes.setItems(opciones, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (opciones[i].equals("Usar cámara")){
+                            // Instrucciones
+                        } else {
+                            if (opciones[i].equals("Cargar foto desde galería")){
+
+                                // Creo el Intente para recorrer la galería de imágenes del dispositivo
+                                Intent intentImagenes = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                // Indico que el Intent es de tipo images
+                                intentImagenes.setType("image/");
+                                startActivityForResult(intentImagenes.createChooser(intentImagenes, "Abrir con"),10);
+
+                            } else {
+                                dialogInterface.dismiss();
+                            }
+                        }
+
+                    }
+                });
 
             }
         });
