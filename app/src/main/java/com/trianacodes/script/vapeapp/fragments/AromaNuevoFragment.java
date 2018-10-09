@@ -21,6 +21,7 @@ import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.trianacodes.script.vapeapp.R;
 import com.trianacodes.script.vapeapp.actividades.CuadroDialogo;
@@ -185,13 +186,21 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getContext(),"Antes de preguntar",Toast.LENGTH_LONG).show();
         // Pregunto si se ha seleccionado una imagen
-        if (requestCode == RESULT_OK){
+        if (resultCode == RESULT_OK){
 
-                // Obtengo los datos del parámetro data y los almaceno en un objeto de tipo URI
-                Uri path = data.getData();
-                // Le asigno a mi ImageView los datos obtenidos en la línea anterior
-                imageAroma.setImageURI(path);
+            Toast.makeText(getContext(),"Depués de preguntar",Toast.LENGTH_LONG).show();
+
+            // Obtengo los datos del parámetro data y los almaceno en un objeto de tipo URI
+            Uri path = data.getData();
+
+            Toast.makeText(getContext(),"Obtenidos datos",Toast.LENGTH_LONG).show();
+
+            // Le asigno a mi ImageView los datos obtenidos en la línea anterior
+            imageAroma.setImageURI(path);
+
+            Toast.makeText(getContext(),"Asignados datos",Toast.LENGTH_LONG).show();
 
         }
 
