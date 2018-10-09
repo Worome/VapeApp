@@ -336,6 +336,7 @@
                 android:layout_height="150dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:contentDescription="@string/descripcion_imagen_aroma"
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_base"
                 app:layout_constraintStart_toStartOf="parent"

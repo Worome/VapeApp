@@ -61,5 +61,6 @@
     <string name="Aromas_Maceracion">Tiempos de Maceración en Días</string>
     <string name="Aromas_BotonImagen">Incluir Foto</string>
     <string name="Titulo_Nuevo_Aroma">NUEVOS AROMAS</string>
+    <string name="descripcion_imagen_aroma">Imágenes de los aromas</string>
 
 </resources>

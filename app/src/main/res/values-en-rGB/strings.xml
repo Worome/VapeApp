@@ -43,7 +43,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="opcion_menu_4">Leave the app</string>
     <string name="content_description_fragment_inicio">Man vaping</string>
-    <string name="titulo_menu_aromas">Flavour</string>
+    <string name="titulo_menu_aromas">Flavours</string>
     <string name="Aromas_Porcentaje1">From</string>
     <string name="Aromas_Porcentaje2">To</string>
     <string name="Aromas_Maceracion">Maceration Times in Days</string>
@@ -60,5 +60,8 @@
     </string-array>
     <string name="Aromas_BotonImagen">Add Image</string>
     <string name="Titulo_Nuevo_Aroma">NEW FLAVOUR</string>
+
+    <string name="titulo_nuevo_aroma">New Flavours</string>
+    <string name="Aromas_Foto">Add Image</string>
 
 </resources>
