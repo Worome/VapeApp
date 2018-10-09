@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -26,6 +27,8 @@ import com.trianacodes.script.vapeapp.actividades.CuadroDialogo;
 import com.trianacodes.script.vapeapp.basedatos.DbHelper;
 import com.trianacodes.script.vapeapp.basedatos.OperacionesBasesDeDatos;
 import com.trianacodes.script.vapeapp.entidades.Aromas;
+
+import static android.app.Activity.RESULT_OK;
 
 //Todo: controlar que Porcentaje desde no sea nunca mayor que porcentaje hasta
 
@@ -50,6 +53,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     private String controlVacio;
     private RatingBar valoracion;
     private Button nuevo, imagen;
+    private ImageView imageAroma;
     OperacionesBasesDeDatos operacionesDatos;
     private DbHelper bd;
     private Aromas aroma = new Aromas();
@@ -101,6 +105,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
         eNombre = vista.findViewById(R.id.etNombre);
         eMarca = vista.findViewById(R.id.etMarca);
         desplegable = vista.findViewById(R.id.spTipo);
+        imageAroma = vista.findViewById(R.id.ivAroma);
         sbPorcentajeDesde = vista.findViewById(R.id.sbPorcentajeDesde);
         ePorcentajeDesde = vista.findViewById(R.id.txtPorcentajeDesde);
         sbPorcentajeHasta = vista.findViewById(R.id.sbPorcentajeHasta);
@@ -122,7 +127,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
                 Intent intentImagenes = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 // Indico que el Intent es de tipo images
                 intentImagenes.setType("image/");
-                startActivityForResult(intentImagenes.createChooser(intentImagenes, "Seleccione app:"),10);
+                startActivityForResult(intentImagenes.createChooser(intentImagenes, "Abrir con"),10);
 
             }
         });
@@ -175,6 +180,21 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Pregunto si se ha seleccionado una imagen
+        if (requestCode == RESULT_OK){
+
+                // Obtengo los datos del parámetro data y los almaceno en un objeto de tipo URI
+                Uri path = data.getData();
+                // Le asigno a mi ImageView los datos obtenidos en la línea anterior
+                imageAroma.setImageURI(path);
+
+        }
+
     }
 
     private void Procesos() {
