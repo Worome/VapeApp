@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -29,6 +33,8 @@ import com.trianacodes.script.vapeapp.actividades.CuadroDialogo;
 import com.trianacodes.script.vapeapp.basedatos.DbHelper;
 import com.trianacodes.script.vapeapp.basedatos.OperacionesBasesDeDatos;
 import com.trianacodes.script.vapeapp.entidades.Aromas;
+
+import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -59,6 +65,9 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     OperacionesBasesDeDatos operacionesDatos;
     private DbHelper bd;
     private Aromas aroma = new Aromas();
+    private final String CARPETA_RAIZ = "fotosApp/";
+    private final String RUTA_IMAGEN = CARPETA_RAIZ + "VapeApp";
+    private String ruta;
 
 
     // TODO: Rename and change types of parameters
@@ -125,30 +134,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View view) {
 
-                final CharSequence[] opciones = {"Usar cámara","Cargar foto desde galería","Cancelar"};
-                final AlertDialog.Builder dialogoImagenes = new AlertDialog.Builder(getContext());
-                dialogoImagenes.setTitle("Selecciona metodo de captura");
-                dialogoImagenes.setItems(opciones, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (opciones[i].equals("Usar cámara")){
-                            // Instrucciones
-                        } else {
-                            if (opciones[i].equals("Cargar foto desde galería")){
-
-                                // Creo el Intente para recorrer la galería de imágenes del dispositivo
-                                Intent intentImagenes = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                // Indico que el Intent es de tipo images
-                                intentImagenes.setType("image/");
-                                startActivityForResult(intentImagenes.createChooser(intentImagenes, "Abrir con"),10);
-
-                            } else {
-                                dialogInterface.dismiss();
-                            }
-                        }
-
-                    }
-                });
+                trataImagenes();
 
             }
         });
@@ -161,6 +147,107 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
         controlBotones();
 
         return vista;
+
+    }
+
+    private void trataImagenes() {
+
+        final CharSequence[] opciones = {"Usar cámara","Cargar foto desde galería","Cancelar"};
+        final AlertDialog.Builder dialogoImagenes = new AlertDialog.Builder(this.getActivity());
+        dialogoImagenes.setTitle("Seleccionar el método de captura");
+        dialogoImagenes.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if(opciones[i].equals("Usar cámara")){
+
+                    hacerFoto();
+
+                } else {
+
+                    if (opciones[i].equals("Cargar foto desde galería")){
+
+                        // Creo el Intent para recorrer la galería de imágenes del dispositivo
+                        Intent intentImagenes = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        // Indico que el Intent es de tipo images
+                        intentImagenes.setType("image/");
+                        startActivityForResult(intentImagenes.createChooser(intentImagenes, "Abrir con"),10);
+
+                    } else {
+
+                        dialogInterface.dismiss();
+
+                    }
+
+                }
+
+            }
+        });
+
+        dialogoImagenes.show();
+
+    }
+
+    private void hacerFoto() {
+
+        File archivoImagen = new File(Environment.getExternalStorageDirectory(), RUTA_IMAGEN);
+        boolean isExisteImagen = archivoImagen.exists();
+        String nombreImagen="";
+
+        if(!isExisteImagen){
+
+            isExisteImagen = archivoImagen.mkdirs();
+
+        } else {
+
+            nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
+
+        }
+
+        ruta = Environment.getExternalStorageDirectory() + File.separator + RUTA_IMAGEN +
+                File.separator + nombreImagen;
+
+        File imagenRuta = new File(ruta);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagenRuta));
+        startActivityForResult(intent,20);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pregunto si se ha seleccionado una imagen
+        if (resultCode == RESULT_OK){
+
+            switch (requestCode){
+
+                case 10:
+                    // Obtengo los datos del parámetro data y los almaceno en un objeto de tipo URI
+                    Uri path = data.getData();
+
+                    // Le asigno a mi ImageView los datos obtenidos en la línea anterior
+                    imageAroma.setImageURI(path);
+                    break;
+                case 20:
+                    //Damos permniso para que la imagen se almacene en la galería del dispositivo
+                    MediaScannerConnection.scanFile(getContext(), new String[]{ruta},
+                            null, new MediaScannerConnection.OnScanCompletedListener() {
+                        @Override
+                        public void onScanCompleted(String s, Uri uri) {
+
+                        }
+                    });
+
+                    // Asignamos la foto tomada a nuestro ImageView
+                    Bitmap bitmap = BitmapFactory.decodeFile(ruta);
+                    imageAroma.setImageBitmap(bitmap);
+                    break;
+
+            }
+
+        }
 
     }
 
@@ -201,23 +288,6 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Pregunto si se ha seleccionado una imagen
-        if (resultCode == RESULT_OK){
-
-            // Obtengo los datos del parámetro data y los almaceno en un objeto de tipo URI
-            Uri path = data.getData();
-
-            // Le asigno a mi ImageView los datos obtenidos en la línea anterior
-            imageAroma.setImageURI(path);
-
-        }
-
     }
 
     private void Procesos() {

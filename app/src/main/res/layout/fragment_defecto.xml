@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/content_description_fragment_inicio"
         android:scaleType="centerCrop"
-        android:src="@drawable/vapeo"
+        android:src="@drawable/vape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/vapeo" />
+        />
 
 </android.support.constraint.ConstraintLayout>
