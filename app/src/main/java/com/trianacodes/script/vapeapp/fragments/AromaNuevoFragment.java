@@ -161,7 +161,11 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
                 if(opciones[i].equals("Usar cámara")){
 
-                    hacerFoto();
+                    if (validarPermiso()){
+                        hacerFoto();
+                    } else {
+
+                    }
 
                 } else {
 
