@@ -1,18 +1,24 @@
 package com.trianacodes.script.vapeapp.fragments;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +42,9 @@ import com.trianacodes.script.vapeapp.entidades.Aromas;
 
 import java.io.File;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
+import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 //Todo: controlar que Porcentaje desde no sea nunca mayor que porcentaje hasta
 
@@ -164,6 +172,21 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
                     if (validarPermiso()){
                         hacerFoto();
                     } else {
+                        AlertDialog.Builder dialogo = new AlertDialog.Builder(getActivity());
+                        dialogo.setTitle("Sin permisos de uso");
+                        dialogo.setMessage("No ha dado los permisos requeridos");
+                        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                dialogInterface.dismiss();
+
+                            }
+
+                        });
+
+                        dialogo.show();
 
                     }
 
@@ -189,6 +212,125 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
         });
 
         dialogoImagenes.show();
+
+    }
+
+    private boolean validarPermiso() {
+
+        /*Vemos la versión del dispositivo. Si es menor que la 6 (MarshMallow -> ), deja hacer la
+        foto con los permisos del AndroidManifest*/
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+
+            return true;
+
+        }
+
+        /*Ahora hay que preguntar si la cámara y el permiso para escribir en la memoria externa
+        están activos. Si es así deja hacer la foto*/
+        if ((ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this.getActivity(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)){
+
+            return true;
+
+        }
+
+        // Ahora hay que preguntar si hay que solicitar permisos para la cámara y la escritura.
+        if((shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) ||
+                (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))){
+
+                /*Llamamos a un método que cargue un mensaje en el que se le avise al usuario que
+                debe dar permisos*/
+                dialogoAvisoUsuario();
+
+        } else {
+
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA}, 100);
+
+        }
+
+        return false;
+
+    }
+
+    private void dialogoAvisoUsuario() {
+
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this.getActivity());
+        dialogo.setTitle("Solicitud de permisos");
+        dialogo.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la aplicación");
+        dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i){
+
+                // Carga los permisos de escritura y de cámara
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA}, 100);
+
+            }
+
+        });
+
+        dialogo.show();
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Validación para saber que viene del requestPermission en concreto
+        if (requestCode == 100){
+
+            /* Controlo que el contenido de grantResults corresponde a las posiciones que tiene el
+            array  enviado como primer parámetro; es decir, los dos permisos: WRITE_EXTERNAL_STORAGE y
+            CAMERA, y además los permisos de acceso a ambos han sido autorizados…*/
+            if (grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED){
+
+                // Llamada al método para hacer la foto
+                hacerFoto();
+
+            } else {
+
+                //Se le da otra oportunidad al usuario para configurar manualmente los permisos
+                configurarPermisosManual();
+
+            }
+
+        }
+
+    }
+
+    private void configurarPermisosManual() {
+
+        final CharSequence[] opciones = {"si","no"};
+        final AlertDialog.Builder dialogoImagenes = new AlertDialog.Builder(this.getActivity());
+        dialogoImagenes.setTitle("¿Quiere configurar los permisos manualmente?");
+        dialogoImagenes.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if(opciones[i].equals("si")){
+
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package",null,null);
+                    intent.setData(uri);
+                    startActivity(intent);
+
+                } else {
+                    // si se pulsa sobre no, se cierra el diálogo
+                    dialogInterface.dismiss();
+                }
+
+            }
+        });
+
+        dialogoImagenes.show();
+
 
     }
 
