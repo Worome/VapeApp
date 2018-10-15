@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -354,8 +355,23 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
                 File.separator + nombreImagen;
 
         File imagenRuta = new File(ruta);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagenRuta));
+        /* Líneas de versiones anteriores
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagenRuta));
+            startActivityForResult(intent,20);
+        */
+
+        Intent intent = null;
+        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            String authorities = getContext().getPackageName()+".provider";
+            Uri imageUri = FileProvider.getUriForFile(this.getContext(), authorities, imagenRuta);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        } else {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagenRuta));
+
+        }
+
         startActivityForResult(intent,20);
 
     }
