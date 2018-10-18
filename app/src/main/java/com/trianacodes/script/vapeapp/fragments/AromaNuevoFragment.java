@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -162,18 +163,24 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     private void trataImagenes() {
 
         final CharSequence[] opciones = {"Usar cámara","Cargar foto desde galería","Cancelar"};
-        final AlertDialog.Builder dialogoImagenes = new AlertDialog.Builder(this.getActivity());
+        final AlertDialog.Builder dialogoImagenes = new AlertDialog.Builder(getContext());
         dialogoImagenes.setTitle("Seleccionar el método de captura");
+        Log.i("Camara Foto:", "Dentro trataImagenes");
         dialogoImagenes.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
+                Log.i("Camara Foto:", "Dentro onClick trataImagenes");
+
                 if(opciones[i].equals("Usar cámara")){
 
                     if (validarPermiso()){
+
+                        Log.i("Camara Foto:", "Dentro pregunta Validarpermiso");
                         hacerFoto();
+
                     } else {
-                        AlertDialog.Builder dialogo = new AlertDialog.Builder(getActivity());
+                        AlertDialog.Builder dialogo = new AlertDialog.Builder(getContext());
                         dialogo.setTitle("Sin permisos de uso");
                         dialogo.setMessage("No ha dado los permisos requeridos");
                         dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -221,6 +228,8 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
         /*Vemos la versión del dispositivo. Si es menor que la 6 (MarshMallow -> ), deja hacer la
         foto con los permisos del AndroidManifest*/
 
+        Log.i("Camara Foto:", "pregunta1");
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
 
             return true;
@@ -229,16 +238,18 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
         /*Ahora hay que preguntar si la cámara y el permiso para escribir en la memoria externa
         están activos. Si es así deja hacer la foto*/
-        if ((ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.CAMERA) ==
+        Log.i("Camara Foto:", "pregunta2");
+        if ((ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED) &&
-                (ContextCompat.checkSelfPermission(this.getActivity(),
+                (ContextCompat.checkSelfPermission(getContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)){
-
+            Log.i("Camara Foto:", "dentro pregunta2");
             return true;
 
         }
 
         // Ahora hay que preguntar si hay que solicitar permisos para la cámara y la escritura.
+        Log.i("Camara Foto:", "pregunta3");
         if((shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) ||
                 (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))){
 
@@ -259,7 +270,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
     private void dialogoAvisoUsuario() {
 
-        AlertDialog.Builder dialogo = new AlertDialog.Builder(this.getActivity());
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(getContext());
         dialogo.setTitle("Solicitud de permisos");
         dialogo.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la aplicación");
         dialogo.setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
@@ -283,11 +294,13 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // Validación para saber que viene del requestPermission en concreto
+        Log.i("Camara Foto:", "pregunta4");
         if (requestCode == 100){
 
             /* Controlo que el contenido de grantResults corresponde a las posiciones que tiene el
             array  enviado como primer parámetro; es decir, los dos permisos: WRITE_EXTERNAL_STORAGE y
             CAMERA, y además los permisos de acceso a ambos han sido autorizados…*/
+            Log.i("Camara Foto:", "pregunta5");
             if (grantResults.length == 2 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[1] == PackageManager.PERMISSION_GRANTED){
 
@@ -308,7 +321,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     private void configurarPermisosManual() {
 
         final CharSequence[] opciones = {"si","no"};
-        final AlertDialog.Builder dialogoImagenes = new AlertDialog.Builder(this.getActivity());
+        final AlertDialog.Builder dialogoImagenes = new AlertDialog.Builder(getContext());
         dialogoImagenes.setTitle("¿Quiere configurar los permisos manualmente?");
         dialogoImagenes.setItems(opciones, new DialogInterface.OnClickListener() {
             @Override
@@ -347,7 +360,9 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
         } else {
 
-            nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
+            //nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
+            nombreImagen = eNombre.getText().toString() + ".jpg";
+            Toast.makeText(getContext(),"La imagen se llama: " + nombreImagen, Toast.LENGTH_LONG).show();
 
         }
 
@@ -363,11 +378,13 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
         Intent intent = null;
         intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Log.i("Camara Foto:", "pregunta6");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
             String authorities = getContext().getPackageName()+".provider";
-            Uri imageUri = FileProvider.getUriForFile(this.getContext(), authorities, imagenRuta);
+            Uri imageUri = FileProvider.getUriForFile(getContext(), authorities, imagenRuta);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         } else {
+            Log.i("Camara Foto:", "pregunta7");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagenRuta));
 
         }
@@ -476,7 +493,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo. Parece que como estoy dentro de un Fragment hay que anteponer al
             getSharedpreferences un objeto de tipo Context (en este caso lo he llamado this.getActivity())*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje", getString(R.string.mensaje_error) + " \n" +
@@ -549,7 +566,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje", getString(R.string.mensaje_error) + " \n " +
@@ -610,7 +627,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error) + " \n " +
@@ -670,7 +687,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error) + " \n " +
@@ -731,7 +748,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error)+ " \n " +
@@ -793,7 +810,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.Errores));
             datosEnviados.putString("Mensaje",   getString(R.string.mensaje_error)+ " \n " +
@@ -899,7 +916,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
             /* Guardo en el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo. En los fragments, hay que usar this.getActivity.getSharedPreferences,
             en vez de escribir sólo getSharedPreferences.*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.aviso));
             datosEnviados.putString("Mensaje", getString(R.string.nombre_blanco));
@@ -933,7 +950,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
             /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.aviso));
             datosEnviados.putString("Mensaje", getString(R.string.marca_blanco));
@@ -971,7 +988,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
                    /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.aviso));
             datosEnviados.putString("Mensaje", getString(R.string.mensaje_maceracion));
@@ -1010,7 +1027,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
                    /* Guardo den el SharedPreferences los datos necesarios que hay que mostrar en el
             cuadro de diálogo*/
-            SharedPreferences preferencias = this.getActivity().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
+            SharedPreferences preferencias = getContext().getSharedPreferences("Dialogos",Context.MODE_PRIVATE);
             SharedPreferences.Editor datosEnviados = preferencias.edit();
             datosEnviados.putString("Titulo",getString(R.string.aviso));
             datosEnviados.putString("Mensaje", getString(R.string.mensaje_maceracion));
