@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -43,6 +44,7 @@ import com.trianacodes.script.vapeapp.basedatos.OperacionesBasesDeDatos;
 import com.trianacodes.script.vapeapp.entidades.Aromas;
 
 import java.io.File;
+import java.io.IOException;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
@@ -77,8 +79,10 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
     private Aromas aroma = new Aromas();
     private final String CARPETA_RAIZ = "fotosApp/";
     private final String RUTA_IMAGEN = CARPETA_RAIZ + "VapeApp";
+    final int COD_SELECCIONA = 10;
+    final int COD_FOTO = 20;
     private String ruta;
-
+    private Bitmap bitmap;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -139,6 +143,7 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
         valoracion = vista.findViewById(R.id.rbValoracion);
         imagen = vista.findViewById(R.id.btnImagen);
         nuevo = vista.findViewById(R.id.btnNuevo);
+        imageAroma = vista.findViewById(R.id.ivAroma);
 
         imagen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -408,6 +413,17 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
 
                     // Le asigno a mi ImageView los datos obtenidos en la línea anterior
                     imageAroma.setImageURI(path);
+                    try{
+
+                        bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), path);
+                        imageAroma.setImageBitmap(bitmap);
+
+                    } catch(IOException e){
+
+                        e.printStackTrace();
+
+                    }
+
                     break;
                 case 20:
                     //Damos permniso para que la imagen se almacene en la galería del dispositivo
@@ -420,11 +436,33 @@ public class AromaNuevoFragment extends android.support.v4.app.Fragment {
                     });
 
                     // Asignamos la foto tomada a nuestro ImageView
-                    Bitmap bitmap = BitmapFactory.decodeFile(ruta);
+                    bitmap = BitmapFactory.decodeFile(ruta);
                     imageAroma.setImageBitmap(bitmap);
                     break;
 
             }
+
+            bitmap = escalaImagen(bitmap, 600, 800);
+
+        }
+
+    }
+
+    private Bitmap escalaImagen(Bitmap bitmap, float anchoNuevo, float altoNuevo) {
+
+        int ancho = bitmap.getWidth();
+        int alto  = bitmap.getHeight();
+        if (ancho > anchoNuevo || alto > altoNuevo){
+
+            float escalaAncho = anchoNuevo / ancho;
+            float escalaAlto = altoNuevo / alto;
+            Matrix matrix = new Matrix();
+            matrix.postScale(escalaAncho,escalaAlto);
+            return bitmap.createBitmap(bitmap,0,0,ancho,alto,matrix,false);
+
+        } else {
+
+            return bitmap;
 
         }
 
